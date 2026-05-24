@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team India | T20 World Champions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bcci-blue: #003865;
+            --india-orange: #FF9933;
+            --india-green: #138808;
+            --pure-white: #ffffff;
+            --live-red: #d32f2f;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+        body { 
+            background-color: var(--bcci-blue); 
+            color: var(--pure-white); 
+            overflow-x: hidden; 
+            position: relative;
+        }
+
+        /* Fake Reload Loader */
+        #loader {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: var(--bcci-blue); z-index: 4000;
+            justify-content: center; align-items: center; flex-direction: column;
+        }
+        .spinner {
+            width: 60px; height: 60px; border: 6px solid var(--pure-white);
+            border-top: 6px solid var(--india-orange); border-bottom: 6px solid var(--india-green);
+            border-radius: 50%; animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        body::before, body::after {
+            content: ''; position: fixed; top: -10%; width: 150px; height: 120vh;
+            background: linear-gradient(rgba(255,255,255,0.15), transparent);
+            transform-origin: top; z-index: -1; animation: searchlights 4s infinite alternate ease-in-out;
+        }
+        body::before { left: 15%; }
+        body::after { right: 15%; animation-delay: -2s; }
+        @keyframes searchlights {
+            0% { transform: rotate(-25deg) scaleX(1); opacity: 0.3; }
+            100% { transform: rotate(25deg) scaleX(2.5); opacity: 0.8; }
+        }
+
+        .live-ticker {
+            background: var(--live-red); color: var(--pure-white); padding: 8px 0;
+            font-weight: 700; font-size: 1.1rem; letter-spacing: 1px;
+            overflow: hidden; white-space: nowrap; border-bottom: 2px solid var(--pure-white); box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        .live-ticker span { display: inline-block; padding-left: 100%; animation: scrollTicker 25s linear infinite; }
+        @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        #main-page, #highlight-details-page { display: block; animation: fadeIn 0.8s; }
+        #highlight-details-page { display: none; min-height: 100vh; padding: 5rem 5%; background: var(--bcci-blue); position: relative; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        header { 
+            background: var(--pure-white); border-bottom: 5px solid var(--india-orange); 
+            padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .logo { font-size: 2rem; font-weight: 900; color: var(--bcci-blue); text-decoration: none; }
+        .logo span { color: var(--india-orange); }
+        
+        .btn-outline { 
+            border: 3px solid var(--india-green); padding: 0.5rem 1.8rem; border-radius: 25px; 
+            color: var(--india-green); background: var(--pure-white); text-decoration: none; 
+            font-weight: 800; cursor: pointer; transition: 0.3s; display: inline-block;
+        }
+        .btn-outline:hover { background: var(--india-green); color: var(--pure-white); }
+        .user-greeting { background: var(--india-green); color: var(--pure-white); border-color: var(--india-green); }
+
+        .hero { display: flex; align-items: center; padding: 5rem 5%; gap: 3rem; position: relative; overflow: hidden; }
+        .hero-text { flex: 1; z-index: 2; }
+        .hero-text h1 { font-size: 4.5rem; color: var(--pure-white); line-height: 1.1; margin-bottom: 1rem; text-shadow: 3px 3px 10px rgba(0,0,0,0.6); }
+        .hero-text h1 span { color: var(--india-orange); }
+        .hero-text p { font-size: 1.2rem; color: #e0e0e0; margin-bottom: 2rem; font-weight: 300; }
+        
+        .live-tag {
+            background: var(--pure-white); color: var(--live-red); padding: 5px 15px; border-radius: 20px; font-weight: 800; 
+            display: inline-flex; align-items: center; gap: 8px; margin-bottom: 15px; border: 2px solid var(--live-red); animation: pulseTag 1.5s infinite;
+        }
+        .live-tag .dot { width: 10px; height: 10px; background: var(--live-red); border-radius: 50%; }
+        @keyframes pulseTag { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.7); } 50% { transform: scale(1.05); box-shadow: 0 0 15px 10px rgba(211, 47, 47, 0); } 100% { transform: scale(1); } }
+
+        .btn-solid { 
+            background: var(--india-orange); color: var(--pure-white); padding: 1rem 2.5rem; 
+            border-radius: 30px; border: 2px solid var(--pure-white); font-weight: 800; 
+            font-size: 1.2rem; cursor: pointer; transition: 0.3s; box-shadow: 0 10px 20px rgba(255, 153, 51, 0.4);
+        }
+        .btn-solid:hover { background: var(--pure-white); color: var(--india-orange); border-color: var(--india-orange); transform: translateY(-5px); }
+        
+        .hero-img { flex: 1; z-index: 2; position: relative; }
+        .hero-img img { width: 100%; border-radius: 15px; border: 6px solid var(--pure-white); box-shadow: 0 0 40px rgba(255, 255, 255, 0.3); transition: 0.5s; }
+        .hero-img img:hover { transform: scale(1.02); }
+
+        .features { padding: 5rem 5%; text-align: center; background: rgba(255, 255, 255, 0.05); border-top: 5px solid var(--india-green); z-index: 2; position: relative; }
+        .features h2 { color: var(--india-orange); font-size: 2.5rem; margin-bottom: 2rem; text-shadow: 2px 2px 5px rgba(0,0,0,0.5); }
+        .grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem; }
+        
+        /* Made Cards Clickable */
+        .card { 
+            flex: 1; min-width: 250px; background: rgba(255, 255, 255, 0.95); padding: 2.5rem 2rem; 
+            border-radius: 15px; border-bottom: 6px solid var(--india-green); transition: 0.4s; 
+            color: var(--bcci-blue); cursor: pointer; position: relative; overflow: hidden;
+        }
+        .card::before {
+            content: 'Click to Read More →'; position: absolute; bottom: -40px; left: 0; width: 100%;
+            background: var(--india-green); color: white; padding: 10px; font-weight: bold; font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.5); background: var(--pure-white); }
+        .card:hover::before { bottom: 0; }
+        .card h3 { color: var(--india-orange); font-size: 1.5rem; margin-bottom: 1rem; font-weight: 800; }
+        .card p { font-weight: 500; margin-bottom: 15px; }
+
+        footer { text-align: center; padding: 2rem; border-top: 1px solid rgba(255,255,255,0.2); margin-top: 2rem; position: relative; z-index: 2; }
+
+        /* Highlight Details Page Styles */
+        .hl-container {
+            max-width: 800px; margin: 0 auto; background: rgba(255, 255, 255, 0.95);
+            padding: 3rem; border-radius: 20px; color: var(--bcci-blue);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); border-top: 8px solid var(--india-orange);
+        }
+        .hl-container h2 { font-size: 3rem; color: var(--india-orange); margin-bottom: 1rem; }
+        .hl-container p { font-size: 1.2rem; font-weight: 500; line-height: 1.8; margin-bottom: 1.5rem; }
+        .hl-container .quote { border-left: 5px solid var(--india-green); padding-left: 15px; font-style: italic; color: #555; }
+        
+        #batting-animation {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: radial-gradient(circle, var(--bcci-blue) 40%, #001a33 100%);
+            z-index: 3000; justify-content: center; align-items: center; flex-direction: column; overflow: hidden;
+        }
+        
+        .cricket-scene { position: relative; width: 300px; height: 250px; display: flex; justify-content: center; align-items: center; }
+        .bat { font-size: 8rem; position: absolute; left: 50px; bottom: 20px; transform-origin: bottom center; transform: rotate(30deg); }
+        .ball { font-size: 2.5rem; position: absolute; right: -100px; bottom: 30px; }
+        .swing-bat { animation: smashHit 1.2s ease-in-out forwards; }
+        .throw-ball { animation: bowlAndFly 1.2s cubic-bezier(.25,.1,.25,1) forwards; }
+        @keyframes smashHit { 0% { transform: rotate(30deg); } 30% { transform: rotate(45deg); } 50% { transform: rotate(-70deg); } 100% { transform: rotate(-70deg); } }
+        @keyframes bowlAndFly { 0% { transform: translateX(0) translateY(0) scale(1) rotate(0deg); } 45% { transform: translateX(-150px) translateY(0) scale(1) rotate(-180deg); } 50% { transform: translateX(-160px) translateY(0) scale(0.8) rotate(-200deg); } 100% { transform: translateX(-800px) translateY(-600px) scale(0.3) rotate(-720deg); } }
+
+        .action-text { margin-top: 30px; font-size: 2rem; color: var(--pure-white); font-weight: 900; letter-spacing: 2px; text-transform: uppercase; text-shadow: 0 0 15px var(--india-orange); opacity: 0; }
+        .show-text { animation: flashText 1.2s ease-in-out forwards; }
+        @keyframes flashText { 0% { opacity: 0; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.1); } 100% { opacity: 0; transform: scale(1); } }
+
+        #signin-page { display: none; min-height: 100vh; background: linear-gradient(135deg, var(--india-orange) 0%, var(--pure-white) 50%, var(--india-green) 100%); justify-content: center; align-items: center; padding: 2rem; position: relative; }
+        .back-btn { position: absolute; top: 20px; left: 20px; background: var(--bcci-blue); color: var(--pure-white); padding: 10px 20px; border-radius: 20px; font-weight: 800; cursor: pointer; border: 2px solid var(--pure-white); }
+        .login-box { background: var(--bcci-blue); padding: 3rem; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); width: 100%; max-width: 450px; text-align: center; color: var(--pure-white); border: 5px solid var(--pure-white); animation: fadeIn 0.8s; }
+        .login-box h2 { font-size: 2.5rem; color: var(--india-orange); margin-bottom: 0.5rem; }
+        .login-box p { margin-bottom: 2rem; font-weight: 300; }
+        .form-input { width: 100%; padding: 15px; margin-bottom: 1.5rem; border-radius: 8px; border: 2px solid var(--pure-white); outline: none; font-size: 1rem; font-weight: 500; }
+        .login-btn { width: 100%; padding: 15px; background: var(--india-green); color: var(--pure-white); border: 2px solid var(--pure-white); border-radius: 8px; font-weight: 800; font-size: 1.2rem; cursor: pointer; transition: 0.3s; }
+        .login-btn:hover { background: var(--pure-white); color: var(--india-green); border-color: var(--india-green); }
+
+        @media (max-width: 768px) { .hero { flex-direction: column; text-align: center; } .hero-text h1 { font-size: 3rem; } .grid { flex-direction: column; } .hl-container h2 { font-size: 2rem; } }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div class="spinner"></div>
+        <h3 style="margin-top: 20px; color: var(--pure-white); font-weight: 800; letter-spacing: 1px;">Loading Details...</h3>
+    </div>
+
+    <div id="batting-animation">
+        <div class="cricket-scene">
+            <div id="player-bat" class="bat">🏏</div>
+            <div id="cricket-ball" class="ball">🔴</div>
+        </div>
+        <h3 id="sixer-text" class="action-text">AND IT'S A MASSIVE SIX! 💥</h3>
+    </div>
+
+    <div id="main-page">
+        <div class="live-ticker">
+            <span>🔴 LATEST NEWS: Squads Announced for IND vs AFG! 🏏 Series includes 1 Test and 2 ODIs. ⚡ Shubman Gill to lead the team, Virat Kohli returns to the squad! 🏆</span>
+        </div>
+
+        <header>
+            <a href="#" class="logo">TEAM <span>INDIA</span></a>
+            <div id="auth-section">
+                <button onclick="goToSignIn()" class="btn-outline">Sign In</button>
+            </div>
+        </header>
+
+        <section class="hero">
+            <div class="hero-text">
+                <span class="live-tag"><span class="dot"></span> #T20WorldChampions</span>
+                <h1>Champions of <span>The World</span></h1>
+                <p>Relive the historic ICC T20 World Cup victory. Join the official fan club of the Men in Blue and celebrate the ultimate glory.</p>
+                <button id="hero-join-btn" onclick="goToSignIn()" class="btn-solid">Join The Celebration</button>
+            </div>
+            <div class="hero-img">
+                <img src="worldcup.jpg" alt="T20 World Cup 2026 Champions">
+            </div>
+        </section>
+
+        <section class="features">
+            <h2>Match Highlights</h2>
+            <div class="grid">
+                <div class="card" onclick="openHighlight('catch')">
+                    <h3>The Perfect Catch</h3>
+                    <p>That boundary-line magic catch that turned the game around and etched history forever in our hearts.</p>
+                </div>
+                <div class="card" onclick="openHighlight('gill')">
+                    <h3>Captain Gill's Knock</h3>
+                    <p>Our Captain Shubman Gill's explosive masterclass that gave the team a perfect, unstoppable start.</p>
+                </div>
+                <div class="card" onclick="openHighlight('bumrah')">
+                    <h3>Boom Boom Mastery</h3>
+                    <p>Flawless death bowling that choked the opposition when it mattered the absolute most for the nation.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Crafted by Vaddemani Sai Kalyan | CodSoft Web Development Task 2</p>
+        </footer>
+    </div>
+
+    <div id="highlight-details-page">
+        <button onclick="closeHighlight()" class="back-btn" style="position: relative; margin-bottom: 2rem; top: 0; left: 0;">← Back to Highlights</button>
+        <div class="hl-container">
+            <h2 id="hl-title">Highlight Title</h2>
+            <p id="hl-desc">Highlight full description goes here...</p>
+            <p class="quote" id="hl-quote">"Epic quote from the match."</p>
+        </div>
+    </div>
+
+    <div id="signin-page">
+        <button onclick="goBack()" class="back-btn">← Back to Stadium</button>
+        
+        <div class="login-box">
+            <h2>Sign In</h2>
+            <p>Welcome to the Champions Fan Club</p>
+            <form onsubmit="handleLogin(event)">
+                <input type="text" id="userName" class="form-input" placeholder="Your Name" required>
+                <input type="email" class="form-input" placeholder="Email Address" required>
+                <input type="password" class="form-input" placeholder="Password" required>
+                <button type="submit" class="login-btn">Login Now</button>
+            </form>
+            <p style="margin-top: 1.5rem; font-size: 0.9rem;">Don't have an account? <a href="#" style="color: var(--india-orange); font-weight: bold; text-decoration: none;">Sign up</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Highlight Data
+        const highlightData = {
+            'catch': {
+                title: "The Boundary-Line Magic",
+                desc: "In the most crucial over of the match, the ball was hit high into the night sky, destined for a six. But out of nowhere, an acrobatic dive near the ropes resulted in one of the greatest catches in T20 World Cup history. The stadium erupted, and the momentum shifted completely towards Team India.",
+                quote: "\"Cometh the hour, cometh the man! A catch that will be remembered for generations!\" - Commnetary Box"
+            },
+            'gill': {
+                title: "Captain Gill's Masterclass",
+                desc: "Leading from the front, Captain Shubman Gill played a sensational innings. Displaying pure elegance and brutal power, he dismantled the opposition's bowling attack. His effortless cover drives and towering sixes set the foundation for a massive total.",
+                quote: "\"Gill is not just playing cricket; he's painting a masterpiece on the pitch today.\" - Harsha Bhogle"
+            },
+            'bumrah': {
+                title: "Boom Boom's Death Bowling",
+                desc: "When the pressure was at its absolute peak, Jasprit Bumrah took the ball. Bowling deadly yorkers and clever slower deliveries, he completely choked the run flow in the death overs. Taking crucial wickets, he proved once again why he is the best in the business.",
+                quote: "\"You can't buy experience, and you definitely can't buy a Jasprit Bumrah yorker!\" - Ravi Shastri"
+            }
+        };
+
+        // Highlight Functions
+        function openHighlight(id) {
+            // Show loader to simulate page refresh
+            document.getElementById('loader').style.display = 'flex';
+            
+            setTimeout(() => {
+                // Populate Data
+                document.getElementById('hl-title').innerText = highlightData[id].title;
+                document.getElementById('hl-desc').innerText = highlightData[id].desc;
+                document.getElementById('hl-quote').innerText = highlightData[id].quote;
+
+                // Switch Pages
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('main-page').style.display = 'none';
+                document.getElementById('highlight-details-page').style.display = 'block';
+                window.scrollTo(0, 0);
+            }, 600); // 0.6 second fake loading
+        }
+
+        function closeHighlight() {
+            document.getElementById('highlight-details-page').style.display = 'none';
+            document.getElementById('main-page').style.display = 'block';
+            window.scrollTo({ top: document.querySelector('.features').offsetTop, behavior: 'smooth' });
+        }
+
+        // Sign In Functions
+        function goToSignIn() {
+            document.getElementById('main-page').style.display = 'none';
+            document.getElementById('batting-animation').style.display = 'flex';
+            window.scrollTo(0, 0);
+            
+            const bat = document.getElementById('player-bat');
+            const ball = document.getElementById('cricket-ball');
+            const text = document.getElementById('sixer-text');
+            
+            bat.classList.remove('swing-bat');
+            ball.classList.remove('throw-ball');
+            text.classList.remove('show-text');
+            
+            void bat.offsetWidth; 
+            
+            bat.classList.add('swing-bat');
+            ball.classList.add('throw-ball');
+            text.classList.add('show-text');
+
+            setTimeout(() => {
+                document.getElementById('batting-animation').style.display = 'none';
+                document.getElementById('signin-page').style.display = 'flex';
+            }, 1400);
+        }
+
+        function goBack() {
+            document.getElementById('signin-page').style.display = 'none';
+            document.getElementById('main-page').style.display = 'block';
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const userName = document.getElementById('userName').value;
+            alert(`Welcome ${userName}! Signed in successfully. #BleedBlue`);
+            
+            document.getElementById('auth-section').innerHTML = `<span class="btn-outline user-greeting">Welcome, ${userName} 🇮🇳</span>`;
+            
+            const heroBtn = document.getElementById('hero-join-btn');
+            heroBtn.innerText = "Explore Fan Club";
+            heroBtn.onclick = function() {
+                window.scrollTo({ top: document.querySelector('.features').offsetTop, behavior: 'smooth' });
+            };
+
+            goBack();
+        }
+    </script>
+
+</body>
+</html>
