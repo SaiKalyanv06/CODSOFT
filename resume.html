@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaddemani Sai Kalyan | Web Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for a Custom Cyber/Tech Dark Theme */
+        :root {
+            --bg-color: #0b0f19;
+            --surface-color: rgba(255, 255, 255, 0.03);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --primary-glow: #00f2fe;
+            --secondary-glow: #4facfe;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.8;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(79, 172, 254, 0.1), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(0, 242, 254, 0.1), transparent 25%);
+        }
+
+        /* Glassmorphism Container */
+        .glass-panel {
+            background: var(--surface-color);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .glass-panel:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.05);
+            border-color: rgba(0, 242, 254, 0.3);
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Developer Style Headings */
+        h1, h2, h3 {
+            font-family: 'Fira Code', monospace;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(to right, var(--primary-glow), var(--secondary-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        /* Unique Hero Section */
+        .hero {
+            text-align: left;
+            padding: 8rem 2rem 5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            animation: slideDown 1s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .hero-text .tagline {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .avatar-container {
+            position: relative;
+        }
+
+        .avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            border: 2px solid var(--primary-glow);
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.4);
+            animation: morph 8s ease-in-out infinite;
+            object-fit: cover;
+        }
+
+        /* Custom Animations */
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes revealUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes morph {
+            0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+            50% { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; }
+            100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+        }
+
+        .animate-on-load {
+            animation: revealUp 1s cubic-bezier(0.23, 1, 0.32, 1) both;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+
+        /* Skills Badges - Cyberpunk Style */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .skill-tag {
+            background: rgba(0, 242, 254, 0.05);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            color: var(--text-main);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: 'Fira Code', monospace;
+            transition: all 0.3s;
+        }
+
+        .skill-tag:hover {
+            background: rgba(0, 242, 254, 0.15);
+            border-color: var(--primary-glow);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Project Cards */
+        .projects-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            border-radius: 15px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 4px; height: 100%;
+            background: linear-gradient(to bottom, var(--primary-glow), var(--secondary-glow));
+        }
+
+        .project-card h3 {
+            color: #fff;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        /* Buttons & Links */
+        .custom-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--secondary-glow), var(--primary-glow));
+            color: #000;
+            font-weight: 600;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            margin-top: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .custom-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+        }
+
+        /* Contact Details */
+        .contact-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .contact-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .contact-links a:hover {
+            color: var(--primary-glow);
+        }
+
+        .contact-links span {
+            color: var(--text-muted);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            display: inline-block;
+            width: 100px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            margin-top: 4rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding-top: 5rem;
+            }
+            .hero-text h1 { font-size: 2.5rem; }
+            .contact-links span { display: block; width: auto; margin-bottom: 0.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header class="hero">
+            <div class="hero-text">
+                <p class="tagline">>> Hello I am Sai Kalyan</p>
+                <h1>Vaddemani <br> Sai Kalyan</h1>
+                <p style="color: var(--text-muted); max-width: 500px;">
+                    A passionate B.Tech CSE student & Web Development Intern at CodSoft. Crafting unique digital experiences through clean code and modern design.
+                </p>
+                <a href="#contact" class="custom-btn">Initiate Contact</a>
+            </div>
+            <div class="avatar-container">
+                <img src="https://images.unsplash.com/photo-1549692520-acc6669e2f0c?q=80&w=200&auto=format&fit=crop" alt="Sai Kalyan" class="avatar">
+            </div>
+        </header>
+
+        <section id="about" class="glass-panel animate-on-load delay-1">
+            <h2><span style="color: #fff;">01.</span> About_Me</h2>
+            <p style="text-align: justify;">
+                Currently pursuing my 3rd year of Computer Science Engineering at <strong>Geethanjali Institute of Science and Technology</strong> with an 80% aggregate. I thrive on solving complex problems and transforming ideas into responsive, user-friendly web interfaces. My goal is to build a robust professional career in the IT industry by continuously learning and applying cutting-edge technologies.
+            </p>
+        </section>
+
+        <section id="skills" class="glass-panel animate-on-load delay-2">
+            <h2><span style="color: #fff;">02.</span> Tech_Stack & Skills</h2>
+            <div style="margin-bottom: 2rem;">
+                <h3 style="color: var(--text-muted); margin-bottom: 1rem; font-size: 1rem;">>> Core Competencies</h3>
+                <div class="skills-grid">
+                    <span class="skill-tag">HTML5</span>
+                    <span class="skill-tag">CSS3</span>
+                    <span class="skill-tag">JavaScript Basics</span>
+                    <span class="skill-tag">Problem Solving</span>
+                    <span class="skill-tag">Team Collaboration</span>
+                    <span class="skill-tag">MS Office</span>
+                </div>
+            </div>
+            
+            <div>
+                <h3 style="color: var(--text-muted); margin-bottom: 1rem; font-size: 1rem;">>> Certifications</h3>
+                <div class="skills-grid">
+                    <span class="skill-tag">Oracle Certified</span>
+                    <span class="skill-tag">Infosys Certified</span>
+                    <span class="skill-tag">Tata Certified</span>
+                    <span class="skill-tag">Wadhwani Certified</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="glass-panel animate-on-load delay-3">
+            <h2><span style="color: #fff;">03.</span> Deployed_Projects</h2>
+            <div class="projects-wrapper">
+                <div class="project-card">
+                    <h3>Personal Portfolio</h3>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">
+                        A custom-designed, fully responsive portfolio built from scratch for the CodSoft Internship. Features a modern dark-glass UI, custom CSS animations, and optimal layout structuring.
+                    </p>
+                </div>
+                <div class="project-card">
+                    <h3>Upcoming Modules</h3>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">
+                        Preparing to develop an interactive Landing Page and a functional Calculator application using DOM manipulation as part of the next web development milestones.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="resume" class="glass-panel animate-on-load delay-3" style="text-align: center;">
+            <h2><span style="color: #fff;">04.</span> Resume.pdf</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Access my full professional timeline, detailed technical skills, and academic records.</p>
+            <a href="Sai_Kalyan_Resume.pdf" class="custom-btn" download>Download CV</a>
+        </section>
+
+        <section id="contact" class="glass-panel animate-on-load delay-3">
+            <h2><span style="color: #fff;">05.</span> Connect_Network</h2>
+            <ul class="contact-links">
+                <li>
+                    <a href="mailto:vsaikalyan2006@gmail.com">
+                        <span>Email</span> vsaikalyan2006@gmail.com
+                    </a>
+                </li>
+                <li>
+                    <a href="tel:8985268372">
+                        <span>Phone</span> +91 8985268372
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/SaiKalyanv06" target="_blank">
+                        <span>GitHub</span> github.com/SaiKalyanv06
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/sai-kalyanv06" target="_blank">
+                        <span>LinkedIn</span> linkedin.com/in/sai-kalyanv06
+                    </a>
+                </li>
+                <li>
+                    <a href="#" style="pointer-events: none;">
+                        <span>Location</span> Nellore, Andhra Pradesh
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>System initialized by Vaddemani Sai Kalyan &copy; 2026</p>
+        <p style="opacity: 0.5;">CodSoft Web Development Module</p>
+    </footer>
+
+</body>
+</html>
